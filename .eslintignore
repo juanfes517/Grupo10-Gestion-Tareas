@@ -2,3 +2,9 @@ node_modules/
 .next/
 out/
 tailwind.config.ts
+components/
+config/
+pages/
+hooks/
+prisma/
+types/
