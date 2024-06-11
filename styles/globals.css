@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400..900&display=swap');
+
+:root {
+  --font-dm_serif_display: 'DM Serif Display', serif;
+  --font-crimson_text: 'Crimson Text', serif;
+}
+
+body {
+  @apply font-dmSerif;
+  font-family: var(--font-dm_serif_display), serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-crimson_text), serif;
+}
+
+/* Estilo para la barra de desplazamiento */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Ancho de la barra de desplazamiento vertical */
+  height: 8px; /* Altura de la barra de desplazamiento horizontal */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color del pulgar */
+  border-radius: 4px; /* Redondeo de esquinas del pulgar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color del pulgar al pasar el mouse por encima */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Color de la pista */
+  border-radius: 4px; /* Redondeo de esquinas de la pista */
+}
