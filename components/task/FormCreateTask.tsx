@@ -1,8 +1,8 @@
 'use client'
 
+import { useCreatePersonalTask, useCreateProjectTask } from '../../hooks/useTask'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { useCreateTask } from '../../hooks/useTask'
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useSession } from 'next-auth/react'
 
@@ -29,33 +29,42 @@ function FormCreateTask({ show, onClose, isPersonal, onSubmitForm, projectId }: 
     return null;
   }
 
-  const { createTask, data: d } = useCreateTask()
+  const { createPersonalTask } = useCreatePersonalTask()
+  const { createProjectTask, data: projectData } = useCreateProjectTask()
   const { data: session } = useSession()
 
   const { register, handleSubmit, reset } = useForm<Inputs>()
   const onSubmit: SubmitHandler<Inputs> = (data: any) => {
 
-    let resp = ''
-
-    if (isPersonal) resp = session?.user.email + ""
-    else resp = data.email
-
-    createTask({
-      variables: {
-        "name": data.name,
-        "description": data.description,
-        "email": resp,
-        "expires": new Date(data.expires).toISOString(),
-        "isPersonal": isPersonal,
-        "projectId": projectId
-      }
-    })
-    onSubmitForm()
-    onClose()
-    if (d?.createTask == null) {
-      window.alert("El usuario no existe")
-    } else {
+    if (isPersonal) {
+      createPersonalTask({
+        variables: {
+          "name": data.name,
+          "description": data.description,
+          "expires": new Date(data.expires).toISOString(),
+          "userId": session?.user.id
+        }
+      })
+      onSubmitForm()
+      onClose()
       window.alert("Tarea creada con éxito")
+    } else {
+      createProjectTask({
+        variables: {
+          "name": data.name,
+          "description": data.description,
+          "email": data.email,
+          "projectId": projectId,
+          "expires": new Date(data.expires).toISOString()
+        }
+      })
+      if (projectData?.createProjectTask == null) {
+        window.alert("El usuario no existe")
+      } else {
+        onSubmitForm()
+        onClose()
+        window.alert("Tarea creada con éxito")
+      }
     }
   }
 

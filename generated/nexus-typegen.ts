@@ -101,8 +101,9 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
     assignUsers: NexusGenRootTypes['User_project'] | null; // User_project
+    createPersonalTask: NexusGenRootTypes['Task'] | null; // Task
     createProject: NexusGenRootTypes['Project'] | null; // Project
-    createTask: NexusGenRootTypes['Task'] | null; // Task
+    createProjectTask: NexusGenRootTypes['Task'] | null; // Task
     deleteTask: NexusGenRootTypes['Task'] | null; // Task
     deleteUserProject: NexusGenRootTypes['User_project'] | null; // User_project
     updateRole: NexusGenRootTypes['User'] | null; // User
@@ -162,8 +163,9 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     assignUsers: 'User_project'
+    createPersonalTask: 'Task'
     createProject: 'Project'
-    createTask: 'Task'
+    createProjectTask: 'Task'
     deleteTask: 'Task'
     deleteUserProject: 'User_project'
     updateRole: 'User'
@@ -226,6 +228,12 @@ export interface NexusGenArgTypes {
       email: string; // String!
       projectId: string; // String!
     }
+    createPersonalTask: { // args
+      description: string; // String!
+      expires: NexusGenScalars['DateTime']; // DateTime!
+      name: string; // String!
+      userId: string; // String!
+    }
     createProject: { // args
       color: string; // String!
       description: string; // String!
@@ -233,11 +241,10 @@ export interface NexusGenArgTypes {
       name: string; // String!
       userId: string; // String!
     }
-    createTask: { // args
+    createProjectTask: { // args
       description: string; // String!
       email: string; // String!
       expires: NexusGenScalars['DateTime']; // DateTime!
-      isPersonal: boolean; // Boolean!
       name: string; // String!
       projectId: string; // String!
     }

@@ -61,32 +61,54 @@ export const useGetAllByProjectId = (projectId: any) => {
   return { data, loading, error, refetch }
 }
 
-// Query para obtener todas las tareas personales de un usuario
-const CREATE_TASK = gql`
-  mutation CreateTask($name: String!, $description: String!, $email: String!, $projectId: String!, $expires: DateTime!, $isPersonal: Boolean!) {
-    createTask(name: $name, description: $description, email: $email, projectId: $projectId, expires: $expires, isPersonal: $isPersonal) {
+const CREATE_PERSONAL_TASK = gql`
+  mutation CreatePersonalTask($name: String!, $description: String!, $expires: DateTime!, $userId: String!) {
+  createPersonalTask(name: $name, description: $description, expires: $expires, userId: $userId) {
+    id
+  }
+}
+`
+// createPersonalTask({
+//   variables: {
+//     "name": data.name,
+//     "description": data.description,
+//     "expires": new Date(data.expires).toISOString(),
+//     "userId": session?.user.id
+//   }
+// })
+// Funcion que crea una tarea
+export const useCreatePersonalTask = () => {
+  const [createPersonalTask, { data, loading, error }] = useMutation<{
+    createPersonalTask: Task
+  }>(CREATE_PERSONAL_TASK)
+  return { createPersonalTask, data, loading, error };
+}
+
+const CREATE_PROJECT_TASK = gql`
+  mutation CreateProjectTask($name: String!, $description: String!, $email: String!, $projectId: String!, $expires: DateTime!) {
+    createProjectTask(name: $name, description: $description, email: $email, projectId: $projectId, expires: $expires) {
       id
     }
   }
 `
 //const { createTask, data, loading, error } = useCreateTask()
-// createTask({
+// createProjectTask({
 //   variables: {
 //     "name": data.name,
 //     "description": data.description,
-//     "email": resp,
-//     "expires": new Date(data.expires).toISOString(),
-//     "isPersonal": isPersonal,
-//     "projectId": projectId
+//     "email": data.email,
+//     "projectId": projectId,
+//     "expires": new Date(data.expires).toISOString()
 //   }
 // })
 // Funcion que crea una tarea
-export const useCreateTask = () => {
-  const [createTask, { data, loading, error }] = useMutation<{
-      createTask: Task
-  }>(CREATE_TASK)
-  return { createTask, data, loading, error };
+export const useCreateProjectTask = () => {
+  const [createProjectTask, { data, loading, error }] = useMutation<{
+    createProjectTask: Task
+  }>(CREATE_PROJECT_TASK)
+  return { createProjectTask, data, loading, error };
 }
+
 
 // Query para obtener todas las tareas personales de un usuario
 const DELETE_TASK = gql`

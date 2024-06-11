@@ -9,8 +9,9 @@ scalar DateTime
 
 type Mutation {
   assignUsers(email: String!, projectId: String!): User_project
+  createPersonalTask(description: String!, expires: DateTime!, name: String!, userId: String!): Task
   createProject(color: String!, description: String!, expires: DateTime!, name: String!, userId: String!): Project
-  createTask(description: String!, email: String!, expires: DateTime!, isPersonal: Boolean!, name: String!, projectId: String!): Task
+  createProjectTask(description: String!, email: String!, expires: DateTime!, name: String!, projectId: String!): Task
   deleteTask(taskId: String!): Task
   deleteUserProject(userProjectId: String!): User_project
   updateRole(role: String!, userId: String!): User
